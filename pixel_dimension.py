@@ -213,7 +213,7 @@ def start_game():
         for hit in player_hits:
             player.health -= hit.damage  # Apply projectile damage to the player
 
-        # Draw the player's health bar
+        # Draw the player's health barr
         health_bar_width = 200
         health_bar_height = 20
         health_ratio = player.health / player_max_health
