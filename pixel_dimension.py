@@ -10,10 +10,10 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
         self.rect = self.image.get_rect(center=(x, y))
-        self.health = 100  # Initial health for the player
+        self.health = 100  #  player health
 
     def update(self, keys, speed, screen_w, screen_h):
-        # Player movement
+        
         if keys[pygame.K_w] and self.rect.top > 0:
             self.rect.y -= speed
         if keys[pygame.K_s] and self.rect.bottom < screen_h:
@@ -35,11 +35,11 @@ class AttackAnimation(pygame.sprite.Sprite):
         self.counter = 0
         self.damage = 10
 
-        # Calculate direction to target
+       
         direction_x = target_x - x
         direction_y = target_y - y
         distance = math.hypot(direction_x, direction_y)
-        if distance == 0:  # Avoid division by zero
+        if distance == 0: 
             distance = 1
         self.velocity_x = (direction_x / distance) * 10
         self.velocity_y = (direction_y / distance) * 10
@@ -48,11 +48,11 @@ class AttackAnimation(pygame.sprite.Sprite):
         self.rect.x += self.velocity_x
         self.rect.y += self.velocity_y
 
-        # Check if the attack has moved off the screen and deactivate it
+        
         if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
             self.kill()
 
-        # Animation logic
+        
         self.counter += 1
         if self.counter >= self.animation_speed:
             self.image = next(self.frame_cycle)
@@ -60,19 +60,18 @@ class AttackAnimation(pygame.sprite.Sprite):
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, velocity_x, velocity_y):
         super().__init__()
-        self.image = pygame.Surface((10, 100))  # Create a 10x10 surface for the projectile
-        self.image.fill((255, 0, 0))  # Fill it with red color
-        self.rect = self.image.get_rect(center=(x, y))  # Set its position
-        self.velocity_x = velocity_x  # Horizontal velocity
-        self.velocity_y = velocity_y  # Vertical velocity
-        self.damage = 500  # Projectile damage
-
+        self.image = pygame.Surface((10, 100)) 
+        self.image.fill((255, 0, 0))  
+        self.rect = self.image.get_rect(center=(x, y))  
+        self.velocity_x = velocity_x  
+        self.velocity_y = velocity_y  
+        self.damage = 500  
     def update(self):
-        # Move the projectile according to its velocity
+        
         self.rect.x += self.velocity_x
         self.rect.y += self.velocity_y
 
-        # Remove the projectile if it moves off-screen
+        
         if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
             self.kill()
 class Boss(pygame.sprite.Sprite):
@@ -81,15 +80,15 @@ class Boss(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
         self.rect = self.image.get_rect(center=(x, y))
         self.health = 1000
-        self.max_health = 1000  # Add max health for the boss
+        self.max_health = 1000  
         self.last_shot_time = 0
-        self.shot_interval = 500  # Reduced shot interval to make the boss shoot faster (500ms)
+        self.shot_interval = 500  
 
     def shoot(self, player_rect):
         direction_x = player_rect.centerx - self.rect.centerx
         direction_y = player_rect.centery - self.rect.centery
         distance = math.hypot(direction_x, direction_y)
-        if distance == 0:  # Avoid division by zero
+        if distance == 0:  
             distance = 1
         velocity_x = (direction_x / distance) * 5
         velocity_y = (direction_y / distance) * 5
@@ -101,41 +100,41 @@ class Boss(pygame.sprite.Sprite):
             self.kill()
 
     def update(self, current_time, player_rect, projectile_group):
-        # Shoot at intervals (adjusted to shoot faster)
+       
         if current_time - self.last_shot_time > self.shot_interval:
             projectile = self.shoot(player_rect)
             projectile_group.add(projectile)
             self.last_shot_time = current_time
 
     def draw_health_bar(self, screen):
-        # Draw the health bar for the boss
+        
         health_bar_width = 200
         health_bar_height = 20
         health_ratio = self.health / self.max_health
         current_health_width = health_bar_width * health_ratio
 
-        # Draw the background (red) of the health bar
+        #  (red) 
         pygame.draw.rect(screen, (255, 0, 0), (self.rect.centerx - health_bar_width // 2, self.rect.top - 30, health_bar_width, health_bar_height))
-        # Draw the current health (green)
+        # (green)
         pygame.draw.rect(screen, (0, 255, 0), (self.rect.centerx - health_bar_width // 2, self.rect.top - 30, current_health_width, health_bar_height))
 
 
 class Projectile(pygame.sprite.Sprite):
     def __init__(self, x, y, velocity_x, velocity_y):
         super().__init__()
-        self.image = pygame.Surface((10, 100))  # Create a 10x100 surface for the laser beam
-        self.image.fill((255, 0, 0))  # Fill it with red color (could change to match laser color)
-        self.rect = self.image.get_rect(center=(x, y))  # Set its position
-        self.velocity_x = velocity_x  # Horizontal velocity
-        self.velocity_y = velocity_y  # Vertical velocity
-        self.damage = 20  # Increased damage for the laser beam
+        self.image = pygame.Surface((10, 50))  
+        self.image.fill((255, 0, 0))  #  red color 
+        self.rect = self.image.get_rect(center=(x, y)) 
+        self.velocity_x = velocity_x *2 #speed
+        self.velocity_y = velocity_y *2 #speed
+        self.damage = 20  #  damage
 
     def update(self):
-        # Move the projectile according to its velocity
+        
         self.rect.x += self.velocity_x
         self.rect.y += self.velocity_y
 
-        # Remove the projectile if it moves off-screen
+        
         if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
             self.kill()
 
@@ -144,7 +143,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
         self.rect = self.image.get_rect(center=(x, y))
-        self.health = 100  # Initial health for the player
+        self.health = 100  # l health for the player
 
     def update(self, keys, speed, screen_w, screen_h):
         # Player movement
@@ -200,20 +199,20 @@ def start_game():
         boss_group.update(current_time, player.rect, projectile_group)
         boss_group.draw(screen)
 
-        # Draw the boss's health bar
+        #boss health bar
         boss.draw_health_bar(screen)
 
-        # Check for collision between boss and attack
+        
         hits = pygame.sprite.spritecollide(boss, attack_sprites, True)
         for hit in hits:
             boss.take_damage(hit.damage)
 
-        # Check for collision between player and projectiles
+        
         player_hits = pygame.sprite.spritecollide(player, projectile_group, True)
         for hit in player_hits:
-            player.health -= hit.damage  # Apply projectile damage to the player
+            player.health -= hit.damage  
 
-        # Draw the player's health barr
+        
         health_bar_width = 200
         health_bar_height = 20
         health_ratio = player.health / player_max_health
