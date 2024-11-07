@@ -59,7 +59,7 @@ def start_game():
     screen_w = 1280        
     screen_h = 720
     screen = pygame.display.set_mode((screen_w, screen_h))
-    screen_react = screen.get_rect()
+    screen_rect = screen.get_rect()
     background = pygame.image.load("assets/wallpaper.png")
     background = pygame.transform.scale(background, (1280, 720))
 
@@ -75,7 +75,7 @@ def start_game():
     player_rect = player_image.get_rect(center=(640, 360))
 
     # Multiple enemies
-    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(25)]
+    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(20)]
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
@@ -94,12 +94,10 @@ def start_game():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:  # Trigger attack with SPACE key
-                        mouse_x, mouse_y = pygame.mouse.get_pos()  # Get the current mouse position
-                        attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
-                        attack_sprites.add(attack)
-
+                if event.key == pygame.K_SPACE:  # Trigger attack with SPACE key
+                    mouse_x, mouse_y = pygame.mouse.get_pos()  # Get the current mouse position
+                    attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
+                    attack_sprites.add(attack)
 
         # Player movement
         keys = pygame.key.get_pressed()
@@ -124,7 +122,8 @@ def start_game():
                 enemy.take_damage(hit.damage)
             
             if enemy.is_near_player(player_rect):
-                player_health -= 0.25  # Decrease health
+                player_health -= 0.25  # Decrease health, prevent it from going below zero
+                player_health = max(player_health, 0)
 
         # Check if all enemies are dead, open the door
         if all(not enemy.alive for enemy in enemies):
@@ -170,4 +169,3 @@ def start_game():
         clock.tick(FPS)
 
     pygame.quit()
-
