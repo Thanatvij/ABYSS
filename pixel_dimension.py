@@ -212,7 +212,6 @@ def start_game():
         for hit in player_hits:
             player.health -= hit.damage  
 
-          
         health_bar_width = 200
         health_bar_height = 20
         health_ratio = player.health / player_max_health

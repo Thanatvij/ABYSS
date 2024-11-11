@@ -131,8 +131,7 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN and skill_points > 0:
             if event.key == pygame.K_1:
-                upgrade_attack_speed()
-                skill_points -= 1
+                pass
             elif event.key == pygame.K_2:
                 upgrade_projectile_size()
                 skill_points -= 1
