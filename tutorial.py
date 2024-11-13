@@ -1,6 +1,5 @@
 import pygame
 from tutorial2 import start_game2
-  # Import the Attack Water game function
 from Mainstage import attack_water
 
 def start_tutorial():
