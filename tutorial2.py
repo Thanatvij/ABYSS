@@ -83,7 +83,7 @@ def start_game2():
     current_dialogue_index = 0
     show_message = True  # Start by showing the message
     message_shown = False
-    message_duration = 2000  # Display each message for 2 seconds
+    message_duration = 2000  # Display  message for 2 seconds
 
     # Message box setup
     message_box = pygame.Rect(100, 550, 1080, 150)
@@ -153,6 +153,7 @@ def start_game2():
                 if current_dialogue_index >= len(dialogue):
                     dialogue_done = True
                     show_message = False
+
                     enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(4)]  # Spawn enemies
 
         if dialogue_done:
@@ -202,8 +203,10 @@ def start_game2():
             pygame.display.update()
             pygame.time.delay(300)  # Small delay before quitting
             pygame.quit()
+
             from Firestage import attack_fire  # Transition to the next game
             attack_fire()
+
             break
 
         # Player health check

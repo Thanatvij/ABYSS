@@ -63,7 +63,7 @@ def start_tutorial():
     show_powers = False  
     chosen_power = None  # Track the selected power
 
-    door_rect = pygame.Rect(600, 100, 60, 80)  
+    door_rect = pygame.Rect(640, 0, 100, 20)  
     door_open = False
     
 

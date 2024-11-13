@@ -64,6 +64,7 @@ def attack_fire():
     fires = []
     fires_spawn_timer = 0
     fires_spawn_delay = 10
+    spawn=True
 
     # Skill upgrade message variables
     level_up_message = ""
@@ -134,7 +135,7 @@ def attack_fire():
                     level_up_message_timer = level_up_message_duration
 
         # Spawn enemies randomly
-        if random.randint(0, 100) < 4:
+        if spawn and random.randint(0, 100) < 4:
             spawn_enemy()
 
         # Event handling
@@ -183,13 +184,16 @@ def attack_fire():
                     if enemy["health"] <= 0:
                         spawn_exp(enemy["rect"].centerx, enemy["rect"].centery)
                         enemies.remove(enemy)
+                        player_kill_count+=1
                     break
 
         # Door open after kills
         if player_kill_count >= 20:
             door_open = True
         if door_open:
+            spawn=False
             pygame.draw.rect(screen, white, door_rect)
+            
 
         # Enemy movement and collision with player
         for enemy in enemies:
