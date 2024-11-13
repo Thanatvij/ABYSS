@@ -83,7 +83,7 @@ def start_game2():
     current_dialogue_index = 0
     show_message = True  # Start by showing the message
     message_shown = False
-    message_duration = 2000  # Display each message for 2 seconds
+    message_duration = 2000  # Display  message for 2 seconds
 
     # Message box setup
     message_box = pygame.Rect(100, 550, 1080, 150)
