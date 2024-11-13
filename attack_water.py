@@ -76,6 +76,7 @@ exp_needed = 100
 skill_points = 0
 max_hp = 100
 hp=100
+player_kill_count = 0
 
 # EXP bar size and position
 exp_bar_width = 1270
@@ -101,6 +102,13 @@ waters_spawn_delay = 100  # ตัวแปรควบคุมความถ�
 level_up_message = ""
 level_up_message_duration = 100
 level_up_message_timer = 0
+
+#Door
+door_rect = pygame.Rect(screen_w//2, (screen_h//2)-50, 50, 100)
+door_open = False
+
+#swich
+spawn=True
 
 # Main game loop
 running = True
@@ -129,7 +137,7 @@ while running:
                 level_up_message = "Level Up! / Press 2 for size / Press 3 for speed /"
                 level_up_message_timer = level_up_message_duration
 
-    if len(enemies) < 50 and random.randint(0, 100) < 4:
+    if spawn and random.randint(0, 100) < 4:
         spawn_enemy()
 
     for event in pygame.event.get():
@@ -186,8 +194,15 @@ while running:
             if water_rect.colliderect(enemy_rect):
                 spawn_exp(enemy_rect.centerx, enemy_rect.centery)
                 enemies.remove(enemy_rect)
+                player_kill_count+=1
                 break
-
+    if player_kill_count == 20:
+        door_open = True
+    
+    if door_open:
+        pygame.draw.rect(screen, white, door_rect)
+        spawn=False
+        
     for enemy_rect in enemies:
         dx, dy = img_rect.centerx - enemy_rect.centerx, img_rect.centery - enemy_rect.centery
         distance = math.hypot(dx, dy)
