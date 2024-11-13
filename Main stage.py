@@ -183,12 +183,7 @@ while running:
         
         water["pos"][0] += water["dir"][0] * water_speed
         water["pos"][1] += water["dir"][1] * water_speed
-        '''
-        if (water["pos"][0] < 0 or water["pos"][0] > screen_w or
-            water["pos"][1] < 0 or water["pos"][1] > screen_h):
-            waters.remove(water)
-            continue
-        '''
+        
         water_rect = pygame.Rect(water["pos"][0], water["pos"][1], water_size, water_size)
         for enemy_rect in enemies[:]:
             if water_rect.colliderect(enemy_rect):
@@ -196,13 +191,16 @@ while running:
                 enemies.remove(enemy_rect)
                 player_kill_count+=1
                 break
-    if player_kill_count == 20:
+    if player_kill_count == 300:
         door_open = True
     
     if door_open:
         pygame.draw.rect(screen, white, door_rect)
         spawn=False
-        
+    
+    if img_rect.colliderect(door_rect):
+        pass
+    
     for enemy_rect in enemies:
         dx, dy = img_rect.centerx - enemy_rect.centerx, img_rect.centery - enemy_rect.centery
         distance = math.hypot(dx, dy)
