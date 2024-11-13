@@ -7,16 +7,16 @@ class AttackAnimation(pygame.sprite.Sprite):
     def __init__(self, x, y, target_x, target_y):
         super().__init__()
         self.frames = [
-            pygame.image.load(f"assets/attack/{i}.png") for i in range(1, 6)
+            pygame.image.load(f"assets\Water1.png") 
         ]
-        self.frames = [pygame.transform.scale(frame, (50, 50)) for frame in self.frames]
+        self.frames = [pygame.transform.scale(frame, (150, 150)) for frame in self.frames]
         self.frame_cycle = cycle(self.frames)
         self.image = next(self.frame_cycle)
         self.rect = self.image.get_rect(center=(x, y))
-        self.animation_speed = 5
+        self.animation_speed = 7
         self.counter = 0
         self.active = True
-        self.damage = 10
+        self.damage = 1000
 
         direction_x = target_x - x
         direction_y = target_y - y
@@ -31,15 +31,12 @@ class AttackAnimation(pygame.sprite.Sprite):
             self.rect.x += self.velocity_x
             self.rect.y += self.velocity_y
 
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
-
             self.counter += 1
             if self.counter >= self.animation_speed:
                 self.image = next(self.frame_cycle)
                 self.counter = 0
 
-def start_game2():
+def start_game3():
     pygame.init()
     pygame.display.set_caption("Abyss")
 
@@ -105,7 +102,11 @@ def start_game2():
     message_after_kill = False  # Flag for displaying the message after killing all enemies
     message_time_start = 0  # Time when the message_after_kill started
     message_delay_duration = 2000  # Delay for 2 seconds before closing the message
-
+    #water
+    waters_spawn_timer=0
+    waters_spawn_delay=100
+    
+    
     while running:
         screen.blit(background, (0, 0))
 
@@ -113,10 +114,12 @@ def start_game2():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
-        attack_sprites.add(attack)
+        waters_spawn_timer+=1
+        if waters_spawn_timer >= waters_spawn_delay:    
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
+            attack_sprites.add(attack)
+            waters_spawn_timer=0
 
         # Player movement
         keys = pygame.key.get_pressed()
@@ -202,8 +205,8 @@ def start_game2():
             pygame.display.update()
             pygame.time.delay(300)  # Small delay before quitting
             pygame.quit()
-            from Firestage import attack_fire  # Transition to the next game
-            attack_fire()
+            from Mainstage import attack_water  # Transition to the next game
+            attack_water()
             break
 
         # Player health check

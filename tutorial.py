@@ -1,6 +1,6 @@
 import pygame
 from tutorial2 import start_game2
-from Mainstage import attack_water
+from tutorial3 import start_game3
 
 def start_tutorial():
     pygame.init()
@@ -65,7 +65,7 @@ def start_tutorial():
 
     door_rect = pygame.Rect(600, 100, 60, 80)  
     door_open = False
-    next_game_triggered = False
+    
 
     # Game loop
     running = True
@@ -143,13 +143,14 @@ def start_tutorial():
             pygame.draw.rect(screen, white, door_rect)
 
         # Door interaction to start the chosen game
-        if door_open and player_rect.colliderect(door_rect) and not next_game_triggered:
+        if door_open and player_rect.colliderect(door_rect) :
             pygame.time.delay(500)  
             if chosen_power == "fire":
                 start_game2()
             elif chosen_power == "water":
-                attack_water()
-            next_game_triggered = True
+                
+                start_game3()
+                break
 
 
         pygame.display.update()

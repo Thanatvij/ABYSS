@@ -3,7 +3,7 @@ import pygame
 import random
 import math
 import enemy
-from pixel_dimension import start_boss
+
 # function
 def attack_water():
     def spawn_enemy():
@@ -200,7 +200,7 @@ def attack_water():
             spawn=False
         
         if img_rect.colliderect(door_rect):
-            start_boss()
+            pass
             
             
         for enemy_rect in enemies:

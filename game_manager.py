@@ -36,8 +36,8 @@ def death_screen(screen):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if RESTART_BUTTON.checkForInput(pygame.mouse.get_pos()):
-                    from ABYSS import start_game
-                    start_game()  # Restart the game
+                    from tutorial import start_tutorial
+                    start_tutorial()  # Restart the game
                 if QUIT_BUTTON.checkForInput(pygame.mouse.get_pos()):
                     pygame.quit()
                     sys.exit()
