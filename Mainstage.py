@@ -105,7 +105,7 @@ def attack_water():
     level_up_message_timer = 0
 
     #Door
-    door_rect = pygame.Rect(screen_w//2, (screen_h//2)-50, 50, 100)
+    door_rect = pygame.Rect(screen_w//2-24, (screen_h//2)-50, 50, 100)
     door_open = False
 
     #swich
@@ -224,9 +224,9 @@ def attack_water():
         pygame.draw.rect(screen, (0, 255, 0), (hp_x, hp_y, current_health_width, hp_h))  
         
         if hp   <= 0:
-                running = False
-                from game_manager import death_screen
-                death_screen(screen)  # Call death screen
+            running = False
+            from game_manager import death_screen
+            death_screen(screen)  # Call death screen
                 
         # Draw projectiles
         for water in waters:

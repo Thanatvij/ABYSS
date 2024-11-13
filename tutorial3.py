@@ -94,7 +94,7 @@ def start_game3():
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
-    door_rect = pygame.Rect(640, 0, 100, 20)  # Door position
+    door_rect = pygame.Rect(screen_w//2-24,screen_h//2-250 , 50, 100)  # Door position
     door_open = False  # Track if the door is open
 
     running = True

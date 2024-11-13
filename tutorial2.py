@@ -7,7 +7,7 @@ class AttackAnimation(pygame.sprite.Sprite):
     def __init__(self, x, y, target_x, target_y):
         super().__init__()
         self.frames = [
-            pygame.image.load(f"assets/attack/{i}.png") for i in range(1, 6)
+            pygame.image.load(f"assets\Fire1.png")
         ]
         self.frames = [pygame.transform.scale(frame, (50, 50)) for frame in self.frames]
         self.frame_cycle = cycle(self.frames)
@@ -97,7 +97,7 @@ def start_game2():
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
-    door_rect = pygame.Rect(640, 0, 100, 20)  # Door position
+    door_rect = pygame.Rect(screen_w//2-24,screen_h//2-250 , 50, 100)  # Door position
     door_open = False  # Track if the door is open
 
     running = True
@@ -105,7 +105,11 @@ def start_game2():
     message_after_kill = False  # Flag for displaying the message after killing all enemies
     message_time_start = 0  # Time when the message_after_kill started
     message_delay_duration = 2000  # Delay for 2 seconds before closing the message
-
+    
+    #FIRE
+    fires_spawn_timer=0
+    fires_spawn_delay=10
+    
     while running:
         screen.blit(background, (0, 0))
 
@@ -113,10 +117,12 @@ def start_game2():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
-        attack_sprites.add(attack)
+        fires_spawn_timer+=1
+        if fires_spawn_timer >= fires_spawn_delay:      
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
+            attack_sprites.add(attack)
+            fires_spawn_timer=0
 
         # Player movement
         keys = pygame.key.get_pressed()

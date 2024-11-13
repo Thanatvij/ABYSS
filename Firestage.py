@@ -72,7 +72,7 @@ def attack_fire():
     level_up_message_timer = 0
 
     # Door
-    door_rect = pygame.Rect(screen_w // 2, (screen_h // 2) - 50, 50, 100)
+    door_rect = pygame.Rect(screen_w // 2-24, (screen_h // 2) - 50, 50, 100)
     door_open = False
 
     # Functions
