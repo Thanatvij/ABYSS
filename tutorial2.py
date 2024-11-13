@@ -154,7 +154,7 @@ def start_game2():
                 if current_dialogue_index >= len(dialogue):
                     dialogue_done = True
                     show_message = False
-                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(20)]  # Spawn enemies
+                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(3)]  # Spawn enemies
 
         if dialogue_done:
             screen.blit(text, text_rect)  # Display "SPACEBAR FOR ATTACK" message
@@ -204,8 +204,8 @@ def start_game2():
             pygame.time.delay(300)  # Small delay before quitting
             pygame.quit()
             next_game_triggered = True
-            from attack_water import start_water  # Transition to the next game
-            start_water()
+            from Mainstage import attack_water  # Transition to the next game
+            attack_water()
             break
 
         # Player health check
