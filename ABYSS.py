@@ -17,7 +17,7 @@ class AttackAnimation(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.animation_speed = 5
         self.counter = 0
-        self.active = True  # Track if animation is running
+        self.active = True
         self.damage = 10
 
         # Calculate direction to target
@@ -75,7 +75,7 @@ def start_game():
     player_rect = player_image.get_rect(center=(640, 360))
 
     # Multiple enemies
-    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(20)]
+    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(1)]
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
@@ -131,21 +131,18 @@ def start_game():
 
         # Draw the door
         if door_open:
-            pygame.draw.rect(screen, white, door_rect)  # Door is now visible (open)
+            pygame.draw.rect(screen, white, door_rect)
 
+        from pixel_dimension import start_boss
         # Check if the player collides with the door and transition only once
         if door_open and player_rect.colliderect(door_rect) and not next_game_triggered:
-            # Final updates before starting the new game
             pygame.display.update()
-            pygame.time.delay(1000)  # Optional delay for a smooth transition
+            pygame.time.delay(500) 
 
-            pygame.quit()  # Close the current game window
+            pygame.quit()  
             next_game_triggered = True  # Set the flag so it only runs once
-            try:
-                subprocess.run([sys.executable, 'attack_water.py'])  # Start the next game
-            except Exception as e:
-                print(f"Failed to start attack_water game: {e}")
-            break  # Exit the game loop
+            start_boss()
+            break
 
         # Check if player health is zero
         if player_health <= 0:
