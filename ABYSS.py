@@ -17,33 +17,31 @@ class AttackAnimation(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.animation_speed = 5
         self.counter = 0
-        self.active = True
         self.damage = 10
 
         # Calculate direction to target
         direction_x = target_x - x
         direction_y = target_y - y
         distance = math.hypot(direction_x, direction_y)
-        if distance == 0:  # Avoid division by zero
+        if distance == 0:
             distance = 1
-        self.velocity_x = (direction_x / distance) * 10  # Speed factor
-        self.velocity_y = (direction_y / distance) * 10  # Speed factor
+        self.velocity_x = (direction_x / distance) * 10
+        self.velocity_y = (direction_y / distance) * 10
 
     def update(self):
-        if self.active:
-            # Move the attack animation toward the target
-            self.rect.x += self.velocity_x
-            self.rect.y += self.velocity_y
+        # Move the attack animation toward the target
+        self.rect.x += self.velocity_x
+        self.rect.y += self.velocity_y
 
-            # Check if the attack has moved off the screen and deactivate it
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+        # Check if the attack has moved off the screen and remove it
+        if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
+            self.kill()
 
-            # Animation logic
-            self.counter += 1
-            if self.counter >= self.animation_speed:
-                self.image = next(self.frame_cycle)
-                self.counter = 0
+        # Animation logic
+        self.counter += 1
+        if self.counter >= self.animation_speed:
+            self.image = next(self.frame_cycle)
+            self.counter = 0
 
 def start_game():
     pygame.init()
@@ -64,7 +62,6 @@ def start_game():
     background = pygame.transform.scale(background, (1280, 720))
 
     # Colors
-    black = (0, 0, 0)
     red = (255, 0, 0)
     white = (255, 255, 255)
     green = (0, 255, 0)
@@ -74,17 +71,21 @@ def start_game():
     player_image = pygame.transform.scale(player_image, (35, 35))
     player_rect = player_image.get_rect(center=(640, 360))
 
-    # Multiple enemies
-    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(1)]
+    # Enemies
+    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(5)]
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
-    door_rect = pygame.Rect(640, 0, 100, 20)  # Door position
-    door_open = False  # Track if the door is open
+    door_rect = pygame.Rect(640, 0, 100, 20)
+    door_open = False
+
+    # Fire delay
+    fire_delay = 10
+    fire_spawn_time = 0
 
     # Game loop
     running = True
-    next_game_triggered = False  # Flag to track if attack_water.py has been started
+    next_game_triggered = False
 
     while running:
         # Fill the screen with the background
@@ -93,11 +94,14 @@ def start_game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:  # Trigger attack with SPACE key
-                    mouse_x, mouse_y = pygame.mouse.get_pos()  # Get the current mouse position
-                    attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
-                    attack_sprites.add(attack)
+
+        # Spawn attack animation based on fire delay
+        fire_spawn_time += 1
+        if fire_spawn_time >= fire_delay:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            attack = AttackAnimation(player_rect.centerx, player_rect.centery, mouse_x, mouse_y)
+            attack_sprites.add(attack)
+            fire_spawn_time = 0  # Reset spawn timer
 
         # Player movement
         keys = pygame.key.get_pressed()
@@ -117,12 +121,12 @@ def start_game():
         for enemy in enemies:
             enemy.update(screen, player_rect)
             
-            hits = pygame.sprite.spritecollide(enemy, attack_sprites, True)  # Remove attack on hit
+            hits = pygame.sprite.spritecollide(enemy, attack_sprites, True)
             for hit in hits:
                 enemy.take_damage(hit.damage)
             
             if enemy.is_near_player(player_rect):
-                player_health -= 0.25  # Decrease health, prevent it from going below zero
+                player_health -= 0.25
                 player_health = max(player_health, 0)
 
         # Check if all enemies are dead, open the door
@@ -133,30 +137,33 @@ def start_game():
         if door_open:
             pygame.draw.rect(screen, white, door_rect)
 
-        from pixel_dimension import start_boss
         # Check if the player collides with the door and transition only once
         if door_open and player_rect.colliderect(door_rect) and not next_game_triggered:
             pygame.display.update()
-            pygame.time.delay(500) 
-
-            pygame.quit()  
-            next_game_triggered = True  # Set the flag so it only runs once
-            start_boss()
+            pygame.time.delay(500)
+            pygame.quit()
+            next_game_triggered = True
+            try:
+                subprocess.run([sys.executable, 'attack_water.py'])
+            except Exception as e:
+                print(f"Failed to start attack_water game: {e}")
             break
 
         # Check if player health is zero
         if player_health <= 0:
             running = False
             from game_manager import death_screen
-            death_screen(screen)  # Call death screen
+            death_screen(screen)
 
         # Draw the health bar
-        health_bar_width = 200
-        health_bar_height = 20
+        health_bar_width = 35
+        health_bar_height = 4
         health_ratio = player_health / player_max_health
         current_health_width = health_bar_width * health_ratio
-        pygame.draw.rect(screen, red, (10, 10, health_bar_width, health_bar_height))
-        pygame.draw.rect(screen, green, (10, 10, current_health_width, health_bar_height))
+        hp_x = player_rect.centerx - health_bar_width // 2
+        hp_y = player_rect.top - health_bar_height - 5 
+        pygame.draw.rect(screen, red, (hp_x, hp_y, health_bar_width, health_bar_height))
+        pygame.draw.rect(screen, green, (hp_x, hp_y, current_health_width, health_bar_height))
 
         # Update and draw attack animations
         attack_sprites.update()
