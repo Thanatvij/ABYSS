@@ -74,12 +74,18 @@ img_rect.center = screen_rect.center
 player_exp = 0
 exp_needed = 100
 skill_points = 0
+max_hp = 100
+hp=100
 
 # EXP bar size and position
 exp_bar_width = 1270
 exp_bar_height = 10
 exp_bar_x = 10
 exp_bar_y = 680
+
+#Health bar
+hp_w=35
+hp_h=4
 
 # Enemy setup
 enemy_img = pygame.image.load("assets/Enemy.png").convert_alpha()
@@ -191,7 +197,22 @@ while running:
             enemy_rect.y += dy * enemy_speed
             
         screen.blit(enemy_img, enemy_rect)
-
+        if enemy_rect.colliderect(img_rect):
+            hp-=1
+    ratio_hp = hp / max_hp
+    current_health_width= hp_w*ratio_hp
+    hp_x = img_rect.centerx - hp_w // 2
+    hp_y = img_rect.top - hp_h - 5 
+    
+    #hp_bar
+    pygame.draw.rect(screen, (255, 0, 0), (hp_x, hp_y, hp_w, hp_h))  
+    pygame.draw.rect(screen, (0, 255, 0), (hp_x, hp_y, current_health_width, hp_h))  
+    
+    if hp   <= 0:
+            running = False
+            from game_manager import death_screen
+            death_screen(screen)  # Call death screen
+            
     # Draw projectiles
     for water in waters:
         pygame.draw.rect(screen, blue_boy, (*water["pos"], water_size, water_size))
