@@ -141,13 +141,13 @@ while running:
 
     # Movement keys
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
+    if keys[pygame.K_w] and img_rect.top>=0:
         img_rect.y -= speed
-    if keys[pygame.K_s]:
+    if keys[pygame.K_s] and img_rect.bottom<=screen_h:
         img_rect.y += speed
-    if keys[pygame.K_a]:
+    if keys[pygame.K_a] and img_rect.left>=0:
         img_rect.x -= speed
-    if keys[pygame.K_d]:
+    if keys[pygame.K_d] and img_rect.right<=screen_w:
         img_rect.x += speed
 
     # Water skill projectiles
@@ -165,14 +165,16 @@ while running:
         waters_spawn_timer = 0
 
     for water in waters[:]:
+        
+        
         water["pos"][0] += water["dir"][0] * water_speed
         water["pos"][1] += water["dir"][1] * water_speed
-
+        '''
         if (water["pos"][0] < 0 or water["pos"][0] > screen_w or
             water["pos"][1] < 0 or water["pos"][1] > screen_h):
             waters.remove(water)
             continue
-
+        '''
         water_rect = pygame.Rect(water["pos"][0], water["pos"][1], water_size, water_size)
         for enemy_rect in enemies[:]:
             if water_rect.colliderect(enemy_rect):
