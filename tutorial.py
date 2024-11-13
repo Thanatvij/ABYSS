@@ -1,7 +1,7 @@
 import pygame
 from itertools import cycle
 import math
-from pixel_dimension import start_boss
+from pixel_dimension import start_boss 
 
 class AttackAnimation(pygame.sprite.Sprite):
     def __init__(self, x, y, target_x, target_y, power_type="fire"):
