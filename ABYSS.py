@@ -75,7 +75,7 @@ def start_game():
     player_rect = player_image.get_rect(center=(640, 360))
 
     # Multiple enemies
-    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(1)]
+    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(10)]
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state

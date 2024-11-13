@@ -78,7 +78,7 @@ def start_boss():
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
+            self.image = pygame.transform.scale(pygame.image.load("assets/boss.png"), (300, 300))
             self.rect = self.image.get_rect(center=(x, y))
             self.health = 1000
             self.max_health = 1000  
