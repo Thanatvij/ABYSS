@@ -160,7 +160,7 @@ def start_game2():
                     dialogue_done = True
                     show_message = False
 
-                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(4)]  # Spawn enemies
+                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(20)]  # Spawn enemies
 
         if dialogue_done:
             screen.blit(text, text_rect)  # Display "SPACEBAR FOR ATTACK" message
