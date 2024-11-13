@@ -1,7 +1,7 @@
-from ABYSS import start_game  
+from tutorial import start_tutorial 
 import pygame, sys
 from button import Button   
-
+from Mainstage import attack_water
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1280, 720))
@@ -39,7 +39,6 @@ def main_menu():
                                     pos=(640, 600), text_input="QUIT", 
                                     font=get_font(75), base_color="white", hovering_color="#B80F0A")
         
-
         for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
             button.update(SCREEN)
@@ -51,10 +50,12 @@ def main_menu():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    pygame.mixer.music.stop()
-                    start_game()  
+                    pygame.mixer.music.stop() 
+                    start_tutorial()  
+                
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
                     options()
+                
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
@@ -85,39 +86,6 @@ def options():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
                     main_menu()
-
-def death_screen():
-    while True:
-        SCREEN.fill("Black")
-
-        font = get_font(0, 75)
-        DEATH_TEXT = font.render("lol u dead ash", True, "Red")
-        DEATH_RECT = DEATH_TEXT.get_rect(center=(640, 200))
-        SCREEN.blit(DEATH_TEXT, DEATH_RECT)
-
-        RESTART_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), 
-                                pos=(640, 400), text_input="RESTART", 
-                                font=pygame.font.Font("assets/Mantinia Regular.otf", 75), 
-                                base_color="white", hovering_color="#B80F0A")
-        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), 
-                             pos=(640, 550), text_input="QUIT", 
-                             font=pygame.font.Font("assets/Mantinia Regular.otf", 75), 
-                             base_color="white", hovering_color="#B80F0A")
-
-        for button in [RESTART_BUTTON, QUIT_BUTTON]:
-            button.changeColor(pygame.mouse.get_pos())
-            button.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if RESTART_BUTTON.checkForInput(pygame.mouse.get_pos()):
-                    start_game()  # Restart the game
-                if QUIT_BUTTON.checkForInput(pygame.mouse.get_pos()):
-                    pygame.quit()
-                    sys.exit()
 
 pygame.display.update()
 main_menu()

@@ -4,7 +4,7 @@ import subprocess
 import sys
 import math
 import random
-import attack_water
+
 def start_boss():
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):
@@ -216,6 +216,7 @@ def start_boss():
             health_bar_height = 20
             health_ratio = player.health / player_max_health
             current_health_width = health_bar_width * health_ratio
+            
             pygame.draw.rect(screen, (255, 0, 0), (10, 10, health_bar_width, health_bar_height))
             pygame.draw.rect(screen, (0, 255, 0), (10, 10, current_health_width, health_bar_height))
 
