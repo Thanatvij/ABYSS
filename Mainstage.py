@@ -192,15 +192,17 @@ def attack_water():
                     enemies.remove(enemy_rect)
                     player_kill_count+=1
                     break
-        if player_kill_count == 20:
-            door_open = True
         
+        # After the kill count condition
+        if player_kill_count >= 20:
+            door_open = True  # Ensure this is set correctly
+
+        # Handle door collision
         if door_open:
             pygame.draw.rect(screen, white, door_rect)
-            spawn=False
-        
-        if img_rect.colliderect(door_rect):
-            pass
+            if img_rect.colliderect(door_rect):
+                import pixel_dimension  # Ensure this import is correct and intended
+                running = False  # Exit the game loop
             
             
         for enemy_rect in enemies:
@@ -210,7 +212,7 @@ def attack_water():
                 dx, dy = dx / distance, dy / distance
                 enemy_rect.x += dx * enemy_speed
                 enemy_rect.y += dy * enemy_speed
-                
+                S
             screen.blit(enemy_img, enemy_rect)
             if enemy_rect.colliderect(img_rect):
                 hp-=1

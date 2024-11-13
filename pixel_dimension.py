@@ -233,3 +233,5 @@ def start_boss():
                 running = False
 
         pygame.quit()
+        
+start_boss()

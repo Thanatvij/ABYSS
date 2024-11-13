@@ -188,11 +188,17 @@ def attack_fire():
                     break
 
         # Door open after kills
+        # After the kill count condition
         if player_kill_count >= 20:
-            door_open = True
+            door_open = True  # Ensure this is set correctly
+
+        # Handle door collision
         if door_open:
-            spawn=False
             pygame.draw.rect(screen, white, door_rect)
+            if img_rect.colliderect(door_rect):
+                import pixel_dimension  # Ensure this import is correct and intended
+                running = False  # Exit the game loop
+
             
 
         # Enemy movement and collision with player
