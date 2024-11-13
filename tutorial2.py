@@ -7,7 +7,7 @@ class AttackAnimation(pygame.sprite.Sprite):
     def __init__(self, x, y, target_x, target_y):
         super().__init__()
         self.frames = [
-            pygame.image.load(f"assets\Fire1.png")
+            pygame.image.load(f"assets/Fire1.png")
         ]
         self.frames = [pygame.transform.scale(frame, (50, 50)) for frame in self.frames]
         self.frame_cycle = cycle(self.frames)
@@ -160,7 +160,7 @@ def start_game2():
                     dialogue_done = True
                     show_message = False
 
-                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(20)]  # Spawn enemies
+                    enemies = [Enemy(200 + i * 10, 100 + i * 5, 2) for i in range(5)]  # Spawn enemies
 
         if dialogue_done:
             screen.blit(text, text_rect)  # Display "SPACEBAR FOR ATTACK" message
