@@ -80,8 +80,8 @@ def start_boss():
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
             self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000
-            self.max_health = 1000  
+            self.health = 1000000000000000000000000000000000000000000000000000000000000000000 d
+            self.max_health = 1000000000000000000000000000000000000000000000000000000000000000000  
             self.last_shot_time = 0
             self.shot_interval = 500  
 
@@ -145,6 +145,7 @@ def start_boss():
             self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
             self.rect = self.image.get_rect(center=(x, y))
             self.health = 100  # l health for the player
+            
 
         def update(self, keys, speed, screen_w, screen_h):
             # Player movement
@@ -185,11 +186,10 @@ def start_boss():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        mouse_x, mouse_y = pygame.mouse.get_pos()
-                        attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
-                        attack_sprites.add(attack)
+                
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
+            attack_sprites.add(attack)
 
             keys = pygame.key.get_pressed()
             player.update(keys, speed, screen_w, screen_h)
@@ -212,13 +212,15 @@ def start_boss():
             for hit in player_hits:
                 player.health -= hit.damage  
 
-            health_bar_width = 200
-            health_bar_height = 20
+            health_bar_width = 35
+            health_bar_height = 4
             health_ratio = player.health / player_max_health
             current_health_width = health_bar_width * health_ratio
+            hp_x = player.rect.centerx - health_bar_width // 2
+            hp_y = player.rect.top - health_bar_height - 5
             
-            pygame.draw.rect(screen, (255, 0, 0), (10, 10, health_bar_width, health_bar_height))
-            pygame.draw.rect(screen, (0, 255, 0), (10, 10, current_health_width, health_bar_height))
+            pygame.draw.rect(screen, (255, 0, 0), (hp_x, hp_y, health_bar_width, health_bar_height))
+            pygame.draw.rect(screen, (0, 255, 0), (hp_x, hp_y, current_health_width, health_bar_height))
 
             attack_sprites.update()
             attack_sprites.draw(screen)
