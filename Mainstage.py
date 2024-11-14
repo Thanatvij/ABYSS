@@ -196,6 +196,7 @@ def attack_water():
         # After the kill count condition
         if player_kill_count >= 20:
             door_open = True  # Ensure this is set correctly
+            spawn=False
 
         # Handle door collision
         if door_open:

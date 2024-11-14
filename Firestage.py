@@ -108,6 +108,7 @@ def attack_fire():
         nonlocal fire_speed
         fire_speed += 1
 
+   
     # Main game loop
     running = True
     while running:
@@ -191,12 +192,14 @@ def attack_fire():
         # After the kill count condition
         if player_kill_count >= 20:
             door_open = True  # Ensure this is set correctly
-
+            spawn=False
+            
         # Handle door collision
         if door_open:
             pygame.draw.rect(screen, white, door_rect)
             if img_rect.colliderect(door_rect):
                 import pixel_dimension  # Ensure this import is correct and intended
+                
                 running = False  # Exit the game loop
 
             
