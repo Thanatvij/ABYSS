@@ -213,7 +213,7 @@ def attack_water():
                 dx, dy = dx / distance, dy / distance
                 enemy_rect.x += dx * enemy_speed
                 enemy_rect.y += dy * enemy_speed
-                
+
             screen.blit(enemy_img, enemy_rect)
             if enemy_rect.colliderect(img_rect):
                 hp-=1
