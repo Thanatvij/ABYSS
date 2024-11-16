@@ -25,6 +25,7 @@ def attack_fire():
     black = (0, 0, 0)
     yellow_fire = (255, 201, 31)
     white = (255, 255, 255)
+    WHITE = (255,255,255)
     green = (0, 255, 0)
     red = (255, 0, 0)
 
@@ -70,6 +71,16 @@ def attack_fire():
     level_up_message = ""
     level_up_message_duration = 100
     level_up_message_timer = 0
+
+    #Font
+    def get_thai_font(size):
+        return pygame.font.Font("assets/Kart-Thai-Khon-Demo.ttf", size)
+    font = get_thai_font(size=30)
+
+    messages = ["ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด", "ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด"]
+    current_messages_index = 0
+    start_time = pygame.time.get_ticks()
+    display_duration = 3000
 
     # Door
     door_rect = pygame.Rect(screen_w // 2-24, (screen_h // 2) - 50, 50, 100)
@@ -197,6 +208,23 @@ def attack_fire():
         # Handle door collision
         if door_open:
             pygame.draw.rect(screen, white, door_rect)
+            elapsed_time = pygame.time.get_ticks() - start_time
+            # Handle message timing
+            if elapsed_time > display_duration:
+                current_messages_index += 1  # Move to the next message
+                start_time = pygame.time.get_ticks()
+            # Display messages
+            if current_messages_index < len(messages):
+                # Render and display the current message
+                text_surface = font.render(messages[current_messages_index], True, WHITE)
+                text_rect = text_surface.get_rect(center=(screen_w // 2, 50))
+                screen.blit(text_surface, text_rect)
+            else:
+                fallback_message = "เพราะฉะนั้นเตรียมไว้ด้วยล่ะ!!!"
+                text_surface = font.render(fallback_message, True, WHITE)
+                text_rect = text_surface.get_rect(center=(screen_w // 2, 50))
+                screen.blit(text_surface, text_rect)
+
             if img_rect.colliderect(door_rect):
                 import bossfire  # Ensure this import is correct and intended
                 
