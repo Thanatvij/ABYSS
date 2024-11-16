@@ -36,8 +36,8 @@ def start_tutorial():
     player_rect = player_image.get_rect(center=(640, 360))
 
     # NPC setup
-    npc_image = pygame.Surface((50, 50)) 
-    npc_image.fill((255, 0, 0))
+    npc_image = pygame.image.load("assets/Wizard.png")
+    npc_image = pygame.transform.scale(npc_image, (100, 100))
     npc_rect = npc_image.get_rect(center=(640, 300))  
 
     # Dialogue setup
