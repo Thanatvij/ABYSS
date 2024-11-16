@@ -94,8 +94,12 @@ def start_game3():
     attack_sprites = pygame.sprite.Group()
 
     # Door and Room state
-    door_rect = pygame.Rect(screen_w//2-24,screen_h//2-250 , 50, 100)  # Door position
-    door_open = False  # Track if the door is open
+    door_width = 85
+    door_height = 190
+    door_rect = pygame.Rect((screen_w - door_width) // 2, 50, door_width, door_height) 
+    door_image = pygame.image.load("assets/Door.png").convert_alpha()
+    door_image = pygame.transform.scale(door_image, (door_width, door_height))
+    door_open = False
 
     running = True
     next_game_triggered = False
@@ -198,7 +202,7 @@ def start_game3():
 
         # Open the door if all enemies are defeated
         if door_open:
-            pygame.draw.rect(screen, white, door_rect)
+            screen.blit(door_image, door_rect)
 
         # Check if player enters the door
         if door_open and player_rect.colliderect(door_rect) :
