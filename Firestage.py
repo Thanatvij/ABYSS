@@ -57,6 +57,7 @@ def attack_fire():
     exp_bar_y = 680
 
     # Health bar
+    
     hp_w = 35
     hp_h = 4
 
@@ -81,7 +82,7 @@ def attack_fire():
     messages = ["ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด", "ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด"]
     current_messages_index = 0
     start_time = pygame.time.get_ticks()
-    display_duration = 3000
+    display_duration = 6000
 
     # Door
     door_width = 85
@@ -231,9 +232,12 @@ def attack_fire():
                 screen.blit(text_surface, text_rect)
 
             if img_rect.colliderect(door_rect):
-                import bossfire  # Ensure this import is correct and intended
-                
+                try:
+                    import bossfire  # Ensure this import is correct and intended
+                except Exception as e:
+                    print(f"Error while importing bossfire: {e}")
                 running = False  # Exit the game loop
+
                 
             
 
@@ -278,4 +282,3 @@ def attack_fire():
         clock.tick(FPS)
 
     pygame.quit()
-attack_fire()

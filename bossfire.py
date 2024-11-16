@@ -8,7 +8,7 @@ def start_boss():
         def __init__(self, x, y):
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
-            self.rect = self.image.get_rect(center=(x, y))
+            self.rect = self.image.get_rect(center=(x, 680))
             self.health = 100  # player health
 
         def update(self, keys, speed, screen_w, screen_h):
@@ -68,7 +68,7 @@ def start_boss():
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load("assets/boss.PNG"), (300, 300))
+            self.image = pygame.transform.scale(pygame.image.load("assets/boss.PNG"), (350,200))
             self.rect = self.image.get_rect(center=(x, y))
             self.health = 1000
             self.max_health = 1000 
@@ -79,8 +79,8 @@ def start_boss():
             # Fire projectiles in a pattern (e.g., random angle)
             for _ in range(20):  # Adjust the number of projectiles fired
                 angle = random.uniform(0, 2 * math.pi)  # Random angle
-                velocity_x = math.cos(angle) * 10
-                velocity_y = math.sin(angle) * 10
+                velocity_x = math.cos(angle) * 5
+                velocity_y = math.sin(angle) * 5
                 projectile = Projectile(self.rect.centerx, self.rect.centery, velocity_x, velocity_y)
                 projectile_group.add(projectile)
 
@@ -185,6 +185,8 @@ def start_boss():
 
         if player.health <= 0:
             running = False
+            from game_manager import death_screen
+            death_screen(screen)  # Call death screen
 
     pygame.quit()
         

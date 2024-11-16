@@ -113,7 +113,7 @@ def attack_water():
     messages = ["ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด", "ถ้านายผ่านประตูนั้นไปค่า status ของนายจะถูกรีเซททั้งหมด"]
     current_messages_index = 0
     start_time = pygame.time.get_ticks()
-    display_duration = 3000
+    display_duration = 6000
 
     #Door
     door_width = 85
@@ -247,7 +247,8 @@ def attack_water():
 
             screen.blit(enemy_img, enemy_rect)
             if enemy_rect.colliderect(img_rect):
-                hp-=1
+                hp-=20
+                
         ratio_hp = hp / max_hp
         current_health_width= hp_w*ratio_hp
         hp_x = img_rect.centerx - hp_w // 2
