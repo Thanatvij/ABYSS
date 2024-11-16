@@ -84,7 +84,11 @@ def attack_fire():
     display_duration = 3000
 
     # Door
-    door_rect = pygame.Rect(screen_w // 2-24, (screen_h // 2) - 50, 50, 100)
+    door_width = 85
+    door_height = 190
+    door_rect = pygame.Rect((screen_w - door_width) // 2, 50, door_width, door_height) 
+    door_image = pygame.image.load("assets/Door.png").convert_alpha()
+    door_image = pygame.transform.scale(door_image, (door_width, door_height))
     door_open = False
 
     # Functions
@@ -208,7 +212,7 @@ def attack_fire():
             
         # Handle door collision
         if door_open:
-            pygame.draw.rect(screen, white, door_rect)
+            screen.blit(door_image, door_rect)
             elapsed_time = pygame.time.get_ticks() - start_time
             # Handle message timing
             if elapsed_time > display_duration:
@@ -221,7 +225,7 @@ def attack_fire():
                 text_rect = text_surface.get_rect(center=(screen_w // 2, 50))
                 screen.blit(text_surface, text_rect)
             else:
-                fallback_message = "เพราะฉะนั้นเตรียมไว้ด้วยล่ะ!!!"
+                fallback_message = "เพราะฉะนั้นเตรียมตัวไว้ด้วยล่ะ!!!"
                 text_surface = font.render(fallback_message, True, WHITE)
                 text_rect = text_surface.get_rect(center=(screen_w // 2, 50))
                 screen.blit(text_surface, text_rect)
@@ -274,3 +278,4 @@ def attack_fire():
         clock.tick(FPS)
 
     pygame.quit()
+attack_fire()

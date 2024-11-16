@@ -68,7 +68,11 @@ def start_tutorial():
     show_powers = False  
     chosen_power = None  # Track the selected power
 
-    door_rect = pygame.Rect(screen_w//2-24,screen_h//2-250 , 50, 100) 
+    door_width = 85
+    door_height = 190
+    door_rect = pygame.Rect((screen_w - door_width) // 2, 50, door_width, door_height) 
+    door_image = pygame.image.load("assets/Door.png").convert_alpha()
+    door_image = pygame.transform.scale(door_image, (door_width, door_height))
     door_open = False
     
 
@@ -170,7 +174,7 @@ def start_tutorial():
                 screen.blit(power_img, (power_x, power_y))
 
         if door_open:
-            pygame.draw.rect(screen, white, door_rect)
+            screen.blit(door_image, door_rect)
 
         # Door interaction to start the chosen game
         if door_open and player_rect.colliderect(door_rect) :
