@@ -5,13 +5,16 @@ import sys
 import math
 import random
 
+
+
+
 def start_boss():
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
             self.rect = self.image.get_rect(center=(x, y))
-            self.health = 100  #  player health
+            self.health = 1000000000000000000000000000000000000000000000000000000000000000000000000  #  player health
 
         def update(self, keys, speed, screen_w, screen_h):
             
@@ -52,8 +55,7 @@ def start_boss():
             
             if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
                 self.kill()
-
-            
+          
             self.counter += 1
             if self.counter >= self.animation_speed:
                 self.image = next(self.frame_cycle)
