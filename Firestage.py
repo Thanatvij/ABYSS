@@ -201,7 +201,7 @@ def attack_fire():
                 import pixel_dimension  # Ensure this import is correct and intended
                 
                 running = False  # Exit the game loop
-
+                
             
 
         # Enemy movement and collision with player
