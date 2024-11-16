@@ -2,6 +2,7 @@
 import pygame
 import random
 import math
+
 def attack_fire():
     # Initialize Pygame
     pygame.init()

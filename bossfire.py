@@ -7,14 +7,14 @@ import random
 
 
 
-
 def start_boss():
+    
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
-            self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000000000000000000000000000000000000000000000000000000000000000000000000  #  player health
+            self.rect = self.image.get_rect(center=(x, 680))
+            self.health = 100  #  player health
 
         def update(self, keys, speed, screen_w, screen_h):
             
@@ -35,9 +35,9 @@ def start_boss():
             self.frame_cycle = cycle(self.frames)
             self.image = next(self.frame_cycle)
             self.rect = self.image.get_rect(center=(x, y))
-            self.animation_speed = 5
+            self.animation_speed = 10
             self.counter = 0
-            self.damage = 10
+            self.damage = 1
 
         
             direction_x = target_x - x
@@ -80,10 +80,10 @@ def start_boss():
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
+            self.image = pygame.transform.scale(pygame.image.load("assets/boss.png"), (300, 300))
             self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000000000000000000000000000000000000000000000000000000000000000000 
-            self.max_health = 1000000000000000000000000000000000000000000000000000000000000000000  
+            self.health = 1000
+            self.max_health = 1000 
             self.last_shot_time = 0
             self.shot_interval = 500  
 
@@ -180,6 +180,9 @@ def start_boss():
         attack_sprites = pygame.sprite.Group()
         projectile_group = pygame.sprite.Group()
 
+        fires_spawn_timer=0
+        fires_spawn_delay=10
+
         running = True
         while running:
             current_time = pygame.time.get_ticks()
@@ -188,10 +191,12 @@ def start_boss():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
-            attack_sprites.add(attack)
+            fires_spawn_timer += 1
+            if fires_spawn_timer >= fires_spawn_delay:    
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
+                attack_sprites.add(attack)
+                fires_spawn_timer=0
 
             keys = pygame.key.get_pressed()
             player.update(keys, speed, screen_w, screen_h)

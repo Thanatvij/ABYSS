@@ -13,8 +13,8 @@ def start_boss():
         def __init__(self, x, y):
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/Mainchar.webp"), (35, 35))
-            self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000000000000000000000000000000000000000000000000000000000000000000000000  #  player health
+            self.rect = self.image.get_rect(center=(x, 680))
+            self.health = 100  #  player health
 
         def update(self, keys, speed, screen_w, screen_h):
             
@@ -37,9 +37,9 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.animation_speed = 5
             self.counter = 0
-            self.damage = 10
+            self.damage = 15
 
-        
+
             direction_x = target_x - x
             direction_y = target_y - y
             distance = math.hypot(direction_x, direction_y)
@@ -69,6 +69,7 @@ def start_boss():
             self.velocity_x = velocity_x  
             self.velocity_y = velocity_y  
             self.damage = 500  
+
         def update(self):
             
             self.rect.x += self.velocity_x
@@ -77,13 +78,14 @@ def start_boss():
             
             if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
                 self.kill()
+
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
+            self.image = pygame.transform.scale(pygame.image.load("assets/boss.PNG"), (300, 300))
             self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000000000000000000000000000000000000000000000000000000000000000000 
-            self.max_health = 1000000000000000000000000000000000000000000000000000000000000000000  
+            self.health = 1000
+            self.max_health = 1000 
             self.last_shot_time = 0
             self.shot_interval = 500  
 
@@ -180,6 +182,8 @@ def start_boss():
         attack_sprites = pygame.sprite.Group()
         projectile_group = pygame.sprite.Group()
 
+        waters_spawn_timer=0
+        waters_spawn_delay=100
         running = True
         while running:
             current_time = pygame.time.get_ticks()
@@ -188,10 +192,13 @@ def start_boss():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
-            attack_sprites.add(attack)
+            
+            waters_spawn_timer += 1
+            if waters_spawn_timer >= waters_spawn_delay:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                attack = AttackAnimation(player.rect.centerx, player.rect.centery, mouse_x, mouse_y)
+                attack_sprites.add(attack)
+                waters_spawn_timer = 0
 
             keys = pygame.key.get_pressed()
             player.update(keys, speed, screen_w, screen_h)
