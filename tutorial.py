@@ -187,4 +187,3 @@ def start_tutorial():
         clock.tick(FPS)
 
     pygame.quit()
-start_tutorial()
