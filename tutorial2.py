@@ -214,12 +214,10 @@ def start_game2():
 
         # Check if player enters the door
         if door_open and player_rect.colliderect(door_rect) :
-            pygame.display.update()
-            pygame.time.delay(300)  # Small delay before quitting
-            pygame.quit()
-
+            
             from Firestage import attack_fire  # Transition to the next game
             attack_fire()
+            running=False
 
             break
 

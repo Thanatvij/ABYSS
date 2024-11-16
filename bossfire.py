@@ -3,6 +3,45 @@ from itertools import cycle
 import math
 import random
 
+def game_over_screen(screen, victory=True):
+    pygame.font.init()
+    font = pygame.font.Font(None, 74)
+    font_small = pygame.font.Font(None, 36)
+
+    # Colors
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+
+    if victory:
+        message = "Victory"
+        instructions = "press R restart or Q quit"
+    else:
+        message = "End"
+        instructions = "press R restart or Q quit"
+
+    message_surface = font.render(message, True, white)
+    instructions_surface = font_small.render(instructions, True, white)
+
+    running = True
+    while running:
+        screen.fill(black)
+        screen.blit(message_surface, (screen.get_width() // 2 - message_surface.get_width() // 2, screen.get_height() // 2 - 50))
+        screen.blit(instructions_surface, (screen.get_width() // 2 - instructions_surface.get_width() // 2, screen.get_height() // 2 + 20))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:  # Restart the game
+                    from tutorial import start_tutorial
+                    return  start_tutorial()
+                    running = False  # Return True to indicate restart
+                if event.key == pygame.K_q:  # Quit the game
+                    pygame.quit()
+                    exit()
+
+        pygame.display.flip()
+
 def start_boss():
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):
@@ -31,7 +70,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.animation_speed = 5
             self.counter = 0
-            self.damage = 2
+            self.damage = 50
 
             direction_x = target_x - x
             direction_y = target_y - y
@@ -68,7 +107,7 @@ def start_boss():
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
-            self.image = pygame.transform.scale(pygame.image.load("assets/boss.PNG"), (350,200))
+            self.image = pygame.transform.scale(pygame.image.load("assets/boss.PNG"), (350, 200))
             self.rect = self.image.get_rect(center=(x, y))
             self.health = 1000
             self.max_health = 1000 
@@ -76,7 +115,6 @@ def start_boss():
             self.shot_interval = 1000  # Shoot every second
 
         def shoot(self):
-            # Fire projectiles in a pattern (e.g., random angle)
             for _ in range(20):  # Adjust the number of projectiles fired
                 angle = random.uniform(0, 2 * math.pi)  # Random angle
                 velocity_x = math.cos(angle) * 5
@@ -165,6 +203,12 @@ def start_boss():
         for hit in player_hits:
             player.health -= hit.damage  
 
+        # Check if boss is defeated
+        if boss.health <= 0:
+            if game_over_screen(screen, victory=True):  # Call game over screen on victory
+                start_boss()  # Restart the game
+            break
+
         # Draw player health bar
         health_bar_width = 35
         health_bar_height = 4
@@ -185,8 +229,8 @@ def start_boss():
 
         if player.health <= 0:
             running = False
-            from game_manager import death_screen
-            death_screen(screen)  # Call death screen
+            # Call death screen or game over logic
+            game_over_screen(screen, victory=False)
 
     pygame.quit()
         
