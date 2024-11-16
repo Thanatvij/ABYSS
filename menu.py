@@ -1,7 +1,6 @@
 from tutorial import start_tutorial 
 import pygame, sys
 from button import Button   
-from Mainstage import attack_water
 pygame.init()
 
 SCREEN = pygame.display.set_mode((1280, 720))

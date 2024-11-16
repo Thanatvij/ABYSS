@@ -19,11 +19,16 @@ def start_tutorial():
     # Colors
     black = (0, 0, 0)
     white = (255, 255, 255)
+    green = (124, 252, 0)
 
     # Fonts
     def get_thai_font(size):
         return pygame.font.Font("assets/Kart-Thai-Khon-Demo.ttf", size)
     font = get_thai_font(size=50)
+    interaction_font = get_thai_font(size=30)
+    interaction_text_color = white
+    text_alpha = 255    #For text animation
+    fade_direction = -5
 
     # Character setup
     player_image = pygame.image.load("assets/Mainchar.webp")
@@ -31,8 +36,8 @@ def start_tutorial():
     player_rect = player_image.get_rect(center=(640, 360))
 
     # NPC setup
-    npc_image = pygame.Surface((50, 50)) 
-    npc_image.fill((255, 0, 0))
+    npc_image = pygame.image.load("assets/Wizard.png")
+    npc_image = pygame.transform.scale(npc_image, (100, 100))
     npc_rect = npc_image.get_rect(center=(640, 300))  
 
     # Dialogue setup
@@ -109,10 +114,19 @@ def start_tutorial():
         if keys[pygame.K_d] and player_rect.right < screen_w:
             player_rect.x += speed
 
+        proximity_threshold = 100
+        is_near_npc = player_rect.colliderect(npc_rect.inflate(proximity_threshold, proximity_threshold))
+
         # Draw elements
         screen.blit(background, (0, 0))
         screen.blit(player_image, player_rect)
         screen.blit(npc_image, npc_rect)
+
+        #Display text when close to the npc
+        if is_near_npc and not show_message:
+            interaction_text_surface = interaction_font.render("Press 'E' to talk", True, interaction_text_color)
+            interaction_text_rect = interaction_text_surface.get_rect(center=(npc_rect.centerx, npc_rect.top - 10))
+            screen.blit(interaction_text_surface, interaction_text_rect)
 
         if show_message and current_dialogue_index < len(dialogue):
             # Draw the border around the message box
@@ -126,6 +140,22 @@ def start_tutorial():
             # Render the text and display it
             text_surface = font.render(dialogue[current_dialogue_index], True, message_text_color)
             screen.blit(text_surface, (message_box.x + 10, message_box.y + 10))
+
+            text_alpha += fade_direction
+            if text_alpha <= 50 or text_alpha >= 255:  # Reverse direction at min/max alpha
+                fade_direction *= -1
+                text_alpha = max(50, min(255, text_alpha))
+
+            instruction_font = get_thai_font(size=30)  # Smaller font for instructions
+            instruction_surface = instruction_font.render("Enter to continue", True, message_text_color)
+            instruction_surface.set_alpha(text_alpha)
+            
+            margin_x =20    #จัดให้ไม่เลยขอบ
+            margin_y =15
+            instruction_rect = instruction_surface.get_rect(
+                bottomright=(message_box.right - margin_x, message_box.bottom - margin_y)
+            )
+            screen.blit(instruction_surface, instruction_rect)
 
         # Power selection display
         if show_powers:
@@ -157,3 +187,4 @@ def start_tutorial():
         clock.tick(FPS)
 
     pygame.quit()
+start_tutorial()
