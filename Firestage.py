@@ -207,7 +207,7 @@ def attack_fire():
 
         # Door open after kills
         # After the kill count condition
-        if player_kill_count >= 20:
+        if player_kill_count >= 300:
             door_open = True  # Ensure this is set correctly
             spawn=False
             

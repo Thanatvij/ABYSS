@@ -209,7 +209,7 @@ def attack_water():
                     break
         
         # After the kill count condition
-        if player_kill_count >= 20:
+        if player_kill_count >= 300:
             door_open = True  # Ensure this is set correctly
             spawn=False
 
@@ -247,8 +247,8 @@ def attack_water():
 
             screen.blit(enemy_img, enemy_rect)
             if enemy_rect.colliderect(img_rect):
-                hp-=20
-                
+                hp-=1
+
         ratio_hp = hp / max_hp
         current_health_width= hp_w*ratio_hp
         hp_x = img_rect.centerx - hp_w // 2
