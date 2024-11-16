@@ -53,8 +53,7 @@ def start_boss():
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
           
             self.counter += 1
             if self.counter >= self.animation_speed:
@@ -76,8 +75,7 @@ def start_boss():
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
 
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
@@ -140,8 +138,7 @@ def start_boss():
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
 
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):

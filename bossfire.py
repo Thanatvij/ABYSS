@@ -53,30 +53,30 @@ def start_boss():
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
           
             self.counter += 1
             if self.counter >= self.animation_speed:
                 self.image = next(self.frame_cycle)
                 self.counter = 0
+
     class Projectile(pygame.sprite.Sprite):
         def __init__(self, x, y, velocity_x, velocity_y):
             super().__init__()
-            self.image = pygame.Surface((10, 100)) 
-            self.image.fill((255, 0, 0))  
-            self.rect = self.image.get_rect(center=(x, y))  
-            self.velocity_x = velocity_x  
-            self.velocity_y = velocity_y  
-            self.damage = 500  
+            self.image = pygame.Surface((10, 50))  
+            self.image.fill((255, 0, 0))  # red color
+            self.rect = self.image.get_rect(center=(x, y)) 
+            self.velocity_x = velocity_x
+            self.velocity_y = velocity_y
+            self.damage = 20  # damage
+
         def update(self):
             
             self.rect.x += self.velocity_x
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
     class Boss(pygame.sprite.Sprite):
         def __init__(self, x, y):
             super().__init__()
@@ -96,6 +96,7 @@ def start_boss():
             velocity_x = (direction_x / distance) * 5
             velocity_y = (direction_y / distance) * 5
             return Projectile(self.rect.centerx, self.rect.centery, velocity_x, velocity_y)
+
 
         def take_damage(self, amount):
             self.health -= amount
@@ -138,8 +139,7 @@ def start_boss():
             self.rect.y += self.velocity_y
 
             
-            if not (0 <= self.rect.x <= 1280 and 0 <= self.rect.y <= 720):
-                self.kill()
+            
 
     class Player(pygame.sprite.Sprite):
         def __init__(self, x, y):
