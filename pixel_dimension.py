@@ -27,7 +27,7 @@ def start_boss():
     class AttackAnimation(pygame.sprite.Sprite):
         def __init__(self, x, y, target_x, target_y):
             super().__init__()
-            self.frames = [pygame.image.load(f"assets/attack/{i}.png") for i in range(1, 6)]
+            self.frames = [pygame.image.load(f"assets\Fire1.png")]
             self.frames = [pygame.transform.scale(frame, (50, 50)) for frame in self.frames]
             self.frame_cycle = cycle(self.frames)
             self.image = next(self.frame_cycle)
@@ -80,7 +80,7 @@ def start_boss():
             super().__init__()
             self.image = pygame.transform.scale(pygame.image.load("assets/enemy.png"), (300, 300))
             self.rect = self.image.get_rect(center=(x, y))
-            self.health = 1000000000000000000000000000000000000000000000000000000000000000000 d
+            self.health = 1000000000000000000000000000000000000000000000000000000000000000000 
             self.max_health = 1000000000000000000000000000000000000000000000000000000000000000000  
             self.last_shot_time = 0
             self.shot_interval = 500  

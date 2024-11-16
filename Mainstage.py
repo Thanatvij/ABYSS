@@ -64,7 +64,7 @@ def attack_water():
 
     # Music
     pygame.mixer.music.load("assets/weird.mp3")
-    pygame.mixer.music.set_volume(0.4)
+    pygame.mixer.music.set_volume(0.1)
     pygame.mixer.music.play(loops=-1)
 
     # Character setup

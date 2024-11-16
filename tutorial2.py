@@ -168,11 +168,13 @@ def start_game2():
         # Enemy updates
         if not show_message:
             attack_sound = pygame.mixer.Sound("assets/sound/attack.wav")
+            
             for enemy in enemies:
                 enemy.update(screen, player_rect)
                 hits = pygame.sprite.spritecollide(enemy, attack_sprites, True)
                 for hit in hits:
                     attack_sound.play()
+                    attack_sound.set_volume(0.1)
                     enemy.take_damage(hit.damage)
                 if enemy.is_near_player(player_rect):
                     player_health -= 0.25
