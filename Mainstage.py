@@ -202,7 +202,7 @@ def attack_water():
         if door_open:
             pygame.draw.rect(screen, white, door_rect)
             if img_rect.colliderect(door_rect):
-                import pixel_dimension  # Ensure this import is correct and intended
+                import bosswater  # Ensure this import is correct and intended
                 running = False  # Exit the game loop
             
             
