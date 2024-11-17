@@ -166,7 +166,7 @@ def attack_fire():
                 elif event.key == pygame.K_3:
                     upgrade_projectile_speed()
                     skill_points -= 1
-        
+
         screen.fill(black)
         screen.blit(img, img_rect)
 
@@ -235,7 +235,8 @@ def attack_fire():
 
             if img_rect.colliderect(door_rect):
                 try:
-                    import bossfire  # Ensure this import is correct and intended
+                    from bossfire import start_boss  # Ensure this import is correct and intended
+                    start_boss()
                 except Exception as e:
                     print(f"Error while importing bossfire: {e}")
                 running = False  # Exit the game loop
@@ -251,9 +252,10 @@ def attack_fire():
                 dx, dy = dx / distance, dy / distance
                 enemy["rect"].x += dx * enemy_speed
                 enemy["rect"].y += dy * enemy_speed
-            screen.blit(enemy_img, enemy["rect"])
             if enemy["rect"].colliderect(img_rect):
                 hp -= 1
+        
+            screen.blit(enemy_img, enemy["rect"])
 
         # HP bar
         current_health_width = hp_w * (hp / max_hp)
@@ -284,5 +286,3 @@ def attack_fire():
         clock.tick(FPS)
 
     pygame.quit()
-
-

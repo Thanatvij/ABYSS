@@ -209,7 +209,7 @@ def attack_water():
                     break
         
         # After the kill count condition
-        if player_kill_count >= 300:
+        if player_kill_count >= 20:
             door_open = True  # Ensure this is set correctly
             spawn=False
 
@@ -233,7 +233,8 @@ def attack_water():
                 screen.blit(text_surface, text_rect)
                 
             if img_rect.colliderect(door_rect):
-                import bosswater  # Ensure this import is correct and intended
+                from bosswater import start_boss  # Ensure this import is correct and intended
+                start_boss()
                 running = False  # Exit the game loop
             
             
