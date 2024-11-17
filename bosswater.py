@@ -70,7 +70,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.animation_speed = 5
             self.counter = 0
-            self.damage = 20
+            self.damage = 15
 
             direction_x = target_x - x
             direction_y = target_y - y
@@ -112,10 +112,10 @@ def start_boss():
             self.health = 1000
             self.max_health = 1000 
             self.last_shot_time = 0
-            self.shot_interval = 1000  # Shoot every second
+            self.shot_interval = 500  # Shoot every second
 
         def shoot(self):
-            for _ in range(20):  # Adjust the number of projectiles fired
+            for _ in range(50):  # Adjust the number of projectiles fired
                 angle = random.uniform(0, 2 * math.pi)  # Random angle
                 velocity_x = math.cos(angle) * 5
                 velocity_y = math.sin(angle) * 5
