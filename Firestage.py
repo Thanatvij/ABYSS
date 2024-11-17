@@ -207,7 +207,7 @@ def attack_fire():
 
         # Door open after kills
         # After the kill count condition
-        if player_kill_count >= 300:
+        if player_kill_count >= 20:
             door_open = True  # Ensure this is set correctly
             spawn=False
             
@@ -282,3 +282,5 @@ def attack_fire():
         clock.tick(FPS)
 
     pygame.quit()
+
+attack_fire()

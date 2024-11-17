@@ -70,7 +70,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.animation_speed = 5
             self.counter = 0
-            self.damage = 50
+            self.damage = 100
 
             direction_x = target_x - x
             direction_y = target_y - y
