@@ -129,8 +129,7 @@ def attack_fire():
     # Main game loop
     running = True
     while running:
-        screen.fill(black)
-        screen.blit(img, img_rect)
+        
 
         # Level-up message
         if level_up_message:
@@ -167,6 +166,9 @@ def attack_fire():
                 elif event.key == pygame.K_3:
                     upgrade_projectile_speed()
                     skill_points -= 1
+        
+        screen.fill(black)
+        screen.blit(img, img_rect)
 
         # Movement keys
         keys = pygame.key.get_pressed()
@@ -283,4 +285,4 @@ def attack_fire():
 
     pygame.quit()
 
-attack_fire()
+
