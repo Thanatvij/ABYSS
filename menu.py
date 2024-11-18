@@ -13,7 +13,7 @@ RED = "#B80F0A"
 FONT_PATH = "assets/Mantinia Regular.otf"
 THAI_FONT_PATH = "assets/Kart Nuea Duang DEMO.ttf"
 BACKGROUND_PATH = "assets/background.png"
-MUSIC_PATH = "assets/ELDEN RING Menu Theme.mp3"
+MUSIC_PATH = "assets/background_music.mp3"
 
 # Initialize screen and background
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
