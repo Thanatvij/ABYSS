@@ -96,7 +96,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.velocity_x = velocity_x
             self.velocity_y = velocity_y
-            self.damage = 20  # Damage value
+            self.damage = 10  # Damage value
 
         def update(self):
             self.rect.x += self.velocity_x

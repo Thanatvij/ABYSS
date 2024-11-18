@@ -70,7 +70,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.animation_speed = 5
             self.counter = 0
-            self.damage = 2
+            self.damage = 5
 
             direction_x = target_x - x
             direction_y = target_y - y
@@ -96,7 +96,7 @@ def start_boss():
             self.rect = self.image.get_rect(center=(x, y))
             self.velocity_x = velocity_x
             self.velocity_y = velocity_y
-            self.damage = 20  # Damage value
+            self.damage = 10  # Damage value
 
         def update(self):
             self.rect.x += self.velocity_x
@@ -233,5 +233,3 @@ def start_boss():
             game_over_screen(screen, victory=False)
 
     pygame.quit()
-        
-start_boss()
