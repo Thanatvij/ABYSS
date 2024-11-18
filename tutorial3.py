@@ -206,11 +206,11 @@ def start_game3():
 
         # Check if player enters the door
         if door_open and player_rect.colliderect(door_rect) :
-            pygame.display.update()
-            pygame.time.delay(300)  # Small delay before quitting
-            pygame.quit()
+
             from Mainstage import attack_water  # Transition to the next game
             attack_water()
+            running = False
+            
             break
 
         # Player health check

@@ -63,7 +63,7 @@ def start_boss():
     class AttackAnimation(pygame.sprite.Sprite):
         def __init__(self, x, y, target_x, target_y):
             super().__init__()
-            self.frames = [pygame.image.load(f"assets\Water1.png")]
+            self.frames = [pygame.image.load(f"assets/Water1.png")]
             self.frames = [pygame.transform.scale(frame, (50, 50)) for frame in self.frames]
             self.frame_cycle = cycle(self.frames)
             self.image = next(self.frame_cycle)
